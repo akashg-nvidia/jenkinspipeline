@@ -1,9 +1,13 @@
 pipeline{
-agents any
+agent any
+environment {
+    myfirstVar = "test"
+}
+
 stages{
    stage('Build'){
       steps{
-      myfirstVar = 'akash'
+      //def myfirstVar = "akash"
        sh 'mvn clean package'
        }
        post
@@ -11,8 +15,8 @@ stages{
           success
           {
             echo "now archieving"
-            echo "Var value $myfirstVar"
-            archive '**/*.war'
+            sh "echo $myfirstVar"
+            archiveArtifacts artifacts: '**/*.war'
           }
          }
               }
