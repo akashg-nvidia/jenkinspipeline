@@ -8,6 +8,7 @@ stages{
    stage('Build'){
       steps{
       //def myfirstVar = "akash"
+      input 'Pipeline has paused and needs your input before proceeding'
        sh 'mvn clean package'
        }
        post
@@ -20,5 +21,22 @@ stages{
           }
          }
               }
-   }
+    stage('Deploy to prod'){
+        steps{
+            timeout(time: 10, unit: 'SECONDS') {
+                input 'user check yes or no'
+    // some block
+               }
+               build 'deploy-to-container'
+            }
+        post{
+            success {
+                echo "deploy to container is successful"
+            }
+            failure{
+                echo "deploy to contaier is failed"
+                   }
+            }
+    }
+    }
    }
