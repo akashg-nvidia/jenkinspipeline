@@ -1,0 +1,20 @@
+pipeline{
+agents any
+stages{
+   stage('Build'){
+      steps{
+      myfirstVar = 'akash'
+       sh 'mvn clean package'
+       }
+       post
+        {
+          success
+          {
+            echo "now archieving"
+            echo "Var value $myfirstVar"
+            archive '**/*.war'
+          }
+         }
+              }
+   }
+   }
